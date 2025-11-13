@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block content %}
+<div class="pt-5">
+  <div class="container p-5 mt-md-5">
+    <div class="row align-items-center justify-content-end">
+      <div class="col-12 mb-5 pb-md-5">
+        <h1 class="text-center fst-italic fw-bold" style="font-size: 64px">
+          "Berkenalan dengan Soft Computing"
+        </h1>
+      </div>
+      <div class="col-md-6 rounded-2">
+        <img
+          src="{{ url_for('static', filename='img/bg.jpg') }}"
+          class="rounded-2 img-fluid"
+          alt=""
+        />
+      </div>
+      <div class="col-md-6 pt-5 text-center text-md-end">
+        <h2 class="fs-1">Apa Itu Soft Computing?</h2>
+        <p class="fs-5">
+          Soft Computing adalah sebuah pendekatan dalam ilmu komputer yang
+          terinspirasi dari cara kerja otak manusia untuk menyelesaikan masalah
+          yang sulit, tidak pasti, dan tidak memiliki jawaban pasti (ambigu)
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<hr />
+<div class="">
+  <div class="container p-5">
+    <h2 class="fw-bold">Hal yang dipelajari</h2>
+    <div class="row justify-content-evenly gap-2 mt-3">
+      <div class="card col-md-5">
+        <div class="card-header fs-5 fw-bold pt-2 bg-white">
+          Neural Network
+        </div>
+        <div class="card-body">
+          <p class="card-text text-justify">
+            Neural Network (atau Jaringan Saraf Tiruan) adalah sebuah model
+            komputasi yang terinspirasi dari cara kerja jaringan neuron di dalam
+            otak manusia. Tujuannya adalah untuk mengenali pola dalam data,
+            sehingga komputer bisa "belajar" dari contoh tanpa perlu diprogram
+            secara eksplisit untuk setiap aturan.
+          </p>
+          <div class="">
+            Cara kerja :
+            <ul>
+              <li>
+                Memberi Makan Data: Jaringan diberi data dalam jumlah besar yang
+                sudah ada jawabannya.
+              </li>
+              <li>
+                Menebak: Jaringan akan mencoba menebak setiap data. Awalnya,
+                tebakannya akan sangat acak dan sering salah.
+              </li>
+              <li>
+                Mengukur Kesalahan: Jaringan kemudian membandingkan tebakannya
+                dengan jawaban yang benar untuk mengukur seberapa besar
+                kesalahannya.
+              </li>
+              <li>
+                Koreksi Diri (Backpropagation): Di sinilah keajaibannya terjadi.
+                Jaringan akan mengirim sinyal kesalahan ini mundur dari lapisan
+                output ke input, lalu sedikit menyesuaikan "kekuatan koneksi"
+                (disebut weights atau bobot) antar neuronnya. Koneksi yang
+        mengarah ke tebakan benar akan diperkuat, dan yang mengarah ke
+        tebakan salah akan dilemahkan.
+              </li>
+              <li>
+                Mengulang: Proses ini diulangi ribuan atau jutaan kali dengan
+                data yang berbeda, hingga jaringan menjadi sangat akurat dalam
+                menebak pola.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card col-md-5">
+        <div class="card-header fs-5 fw-bold pt-2 bg-white">
+          Logika Fuzzy
+        </div>
+        <div class="card-body">
+          <p class="card-text text-justify">
+            Logika Fuzzy adalah sebuah pendekatan logika yang meniru cara
+            berpikir manusia, di mana sesuatu bisa bernilai "sebagian benar",
+            tidak hanya hitam-putih (benar atau salah).
+            <br />
+            <br />
+            Berbeda dengan logika klasik (Boolean) yang hanya mengenal dua
+            nilai—1 (benar) atau 0 (salah)—logika fuzzy memungkinkan adanya nilai
+            di antara keduanya, seperti 0.2, 0.5, atau 0.8. Nilai ini disebut
+            derajat keanggotaan (degree of membership).
+            <br />
+            <br />
+            Logika fuzzy sangat berguna untuk mengendalikan sistem yang kompleks
+            dan tidak pasti, di mana aturan yang kaku tidak efektif. Ia menjadi
+            dasar dari banyak teknologi cerdas.
+          </p>
+          <div>
+            Contoh Penggunaan :
+            <ul>
+              <li>
+                Mesin Cuci Otomatis: Sensor mengukur tingkat kekeruhan air (agak
+                kotor, kotor, sangat kotor) dan jumlah pakaian (sedikit, sedang,
+                banyak) untuk menentukan durasi pencucian dan jumlah deterjen
+                secara otomatis.
+              </li>
+              <li>
+                Air Conditioner (AC): AC menggunakan logika fuzzy untuk mengatur
+                kecepatan kipas. Jika suhu ruangan "agak panas", kipas akan
+                berputar "agak cepat", bukan langsung ke kecepatan maksimal. Ini
+                membuatnya lebih efisien dan nyaman.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Judul halaman akan dinamis berdasarkan halaman yang dibuka -->
+    <title>Soft Computing - {% block title %}Home{% endblock %}</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+    />
+    <style>
+      /* Menambahkan padding atas untuk body agar konten tidak tertutup navbar fixed */
+      body {
+        padding-top: 70px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVIGASI -->
+    <nav
+      class="navbar py-2 bg-light z-3 navbar-expand-lg border-bottom w-100 position-fixed top-0"
+    >
+      <div class="container d-flex align-items-center gap-3">
+        <a class="navbar-brand fst-italic fs-3 fw-bold" href="{{ url_for('home') }}"
+          >SoftComputing</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto gap-3">
+            <a 
+              class="nav-link {% if request.endpoint == 'home' %}active fw-bold{% endif %}" 
+              aria-current="page" 
+              href="{{ url_for('home') }}"
+            >Home</a>
+            <a 
+              class="nav-link {% if request.endpoint == 'fuzzy' %}active fw-bold{% endif %}" 
+              href="{{ url_for('fuzzy') }}"
+            >Metode Fuzzy</a>
+            <!-- <a 
+              class="nav-link {% if request.endpoint == 'pricing' %}active fw-bold{% endif %}" 
+              href="{{ url_for('pricing') }}"
+            >Pricing</a> -->
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-light text-center py-3 mt-5">
+      <div class="container pt-3 pb-3">
+        <p class="mb-0 text-muted">
+          © 2025 Create with love by
+          <a href="#" class="text-dark fw-bold text-decoration-none"
+            >Bima Arya Sena</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  </body>
+</html>
