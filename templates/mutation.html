@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+{% block title %} Simulasi GA (Knapsack) {% endblock %}
+
+{% block content %}
+<div class="container p-5 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <h1 class="fw-bold">Simulasi Algoritma Genetika (Knapsack Problem)</h1>
+      <p>
+        Ubah parameter di bawah ini untuk melihat bagaimana pengaruhnya terhadap
+        hasil akhir.
+      </p>
+      <hr />
+
+      {% if error %}
+      <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> {{ error }}
+      </div>
+      {% endif %}
+
+      <div class="row">
+        <!-- KOLOM INPUT (KIRI) -->
+        <div class="col-md-5 mb-4">
+          <h3 class="fw-light">Parameter GA</h3>
+          <form
+            method="POST"
+            action="{{ url_for('mutation_page') }}"
+            class="card shadow-sm border-0"
+          >
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="pop_size" class="form-label fw-bold"
+                  >Ukuran Populasi</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="pop_size"
+                  name="pop_size"
+                  min="2"
+                  step="1"
+                  required
+                  value="{{ form_data.pop_size }}"
+                />
+                <div class="form-text">
+                  Jumlah kromosom dalam satu generasi.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="generations" class="form-label fw-bold"
+                  >Jumlah Generasi</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="generations"
+                  name="generations"
+                  min="1"
+                  step="1"
+                  required
+                  value="{{ form_data.generations }}"
+                />
+                <div class="form-text">Berapa kali siklus evolusi diulang.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="crossover_rate" class="form-label fw-bold"
+                  >Crossover Rate (0.0 - 1.0)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="crossover_rate"
+                  name="crossover_rate"
+                  step="0.01"
+                  min="0.0"
+                  max="1.0"
+                  required
+                  value="{{ form_data.crossover_rate }}"
+                />
+                <div class="form-text">
+                  Probabilitas dua parent melakukan crossover.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="mutation_rate" class="form-label fw-bold"
+                  >Mutation Rate (0.0 - 1.0)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="mutation_rate"
+                  name="mutation_rate"
+                  step="0.01"
+                  min="0.0"
+                  max="1.0"
+                  required
+                  value="{{ form_data.mutation_rate }}"
+                />
+                <div class="form-text">
+                  Probabilitas setiap gen untuk bermutasi.
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 fw-bold">
+                Kirim
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- KOLOM HASIL (KANAN) -->
+        <div class="col-md-7">
+          <h3 class="fw-light">Hasil Simulasi</h3>
+
+          {% if final_result %}
+          <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header fw-bold fs-5 bg-primary text-white">
+              Solusi Terbaik Ditemukan
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between">
+                  <span class="text-muted">Kromosom</span>
+
+                  <span class="fw-bold fs-5 text-monospace"
+                    >[{{ final_result.chromosome|map('string')|join(', ')
+                    }}]</span
+                  >
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span class="text-muted">Item Terpilih</span>
+                  <span class="fw-bold"
+                    >{{ final_result.chosen_items|join(', ') if
+                    final_result.chosen_items else 'Tidak ada' }}</span
+                  >
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span class="text-muted">Total Berat</span>
+                  <span class="fw-bold"
+                    >{{ final_result.weight }}kg / {{ final_result.capacity
+                    }}kg</span
+                  >
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span class="text-muted">Total Nilai (Fitness)</span>
+                  <span class="fw-bold fs-5 text-success"
+                    >{{ final_result.value }}</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Card Log Generasi -->
+          <div class="card shadow-sm border-0">
+            <div class="card-header fw-bold">Log Generasi</div>
+            <div class="card-body">
+              <pre class="ga-log"><code>{% for line in logs %}{{ line }}
+{% endfor %}</code></pre>
+            </div>
+          </div>
+
+          {% else %}
+          <div class="card shadow-sm border-0 h-100">
+            <div
+              class="card-body d-flex flex-column justify-content-center align-items-center text-center text-muted"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                fill="currentColor"
+                class="bi bi-play-btn-fill mb-3"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M0 12V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm6.79-6.907A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"
+                />
+              </svg>
+              <h5 class="card-title">Menunggu Input</h5>
+              <p class="card-text">
+                Silakan masukkan parameter GA dan tekan tombol "Jalankan
+                Simulasi".
+              </p>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

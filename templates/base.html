@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Judul halaman akan dinamis berdasarkan halaman yang dibuka -->
     <title>Soft Computing - {% block title %}Home{% endblock %}</title>
 
     <link
@@ -11,7 +10,6 @@
       href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
     />
     <style>
-      /* Menambahkan padding atas untuk body agar konten tidak tertutup navbar fixed */
       body {
         padding-top: 70px;
       }
@@ -23,7 +21,9 @@
       class="navbar py-2 bg-light z-3 navbar-expand-lg border-bottom w-100 position-fixed top-0"
     >
       <div class="container d-flex align-items-center gap-3">
-        <a class="navbar-brand fst-italic fs-3 fw-bold" href="{{ url_for('home') }}"
+        <a
+          class="navbar-brand fst-italic fs-3 fw-bold"
+          href="{{ url_for('home') }}"
           >SoftComputing</a
         >
         <button
@@ -39,27 +39,33 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto gap-3">
-            <a 
-              class="nav-link {% if request.endpoint == 'home' %}active fw-bold{% endif %}" 
-              aria-current="page" 
+            <a
+              class="nav-link {% if request.endpoint == 'home' %}active fw-bold{% endif %}"
+              aria-current="page"
               href="{{ url_for('home') }}"
-            >Home</a>
-            <a 
-              class="nav-link {% if request.endpoint == 'fuzzy' %}active fw-bold{% endif %}" 
+              >Home</a
+            >
+            <a
+              class="nav-link {% if request.endpoint == 'fuzzy' %}active fw-bold{% endif %}"
               href="{{ url_for('fuzzy') }}"
-            >Metode Fuzzy</a>
-            <!-- <a 
-              class="nav-link {% if request.endpoint == 'pricing' %}active fw-bold{% endif %}" 
-              href="{{ url_for('pricing') }}"
-            >Pricing</a> -->
+              >Metode Fuzzy</a
+            >
+            <a
+              class="nav-link {% if request.endpoint == 'mutation_page' %}active fw-bold{% endif %}"
+              href="{{ url_for('mutation_page') }}"
+              >Mutasi Kromosom</a
+            >
+            <a
+              class="nav-link {% if request.endpoint == 'tsp_page' %}active fw-bold{% endif %}"
+              href="{{ url_for('tsp_page') }}"
+              >GA TSP</a
+            >
           </div>
         </div>
       </div>
     </nav>
 
-    <main>
-      {% block content %}{% endblock %}
-    </main>
+    <main>{% block content %}{% endblock %}</main>
 
     <footer class="bg-light text-center py-3 mt-5">
       <div class="container pt-3 pb-3">

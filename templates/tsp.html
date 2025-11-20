@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  GA: Traveling Salesperson Problem
+{% endblock %}
+
+{% block content %}
+<div class="container p-5 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      
+      <h1 class="fw-bold">Traveling Salesperson Problem (TSP)</h1>
+      <p class="fs-5">
+        Menemukan rute terpendek untuk mengunjungi semua kota tepat satu kali dan kembali ke kota awal menggunakan Algoritma Genetika.
+      </p>
+      <p class="text-muted">
+        <small>Data kota sesuai CSV: A, B, C, D, E.</small>
+      </p>
+      <hr>
+
+      {% if error %}
+        <div class="alert alert-danger" role="alert">
+          <strong>Error:</strong> {{ error }}
+        </div>
+      {% endif %}
+
+      <div class="row">
+        
+        <!-- KOLOM INPUT -->
+        <div class="col-md-4 mb-4">
+          <h3 class="fw-light">Parameter GA</h3>
+          <form method="POST" action="{{ url_for('tsp_page') }}" class="card shadow-sm border-0">
+            <div class="card-body">
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">Ukuran Populasi</label>
+                <input type="number" class="form-control" name="pop_size" value="{{ form_data.pop_size }}" min="10" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">Jumlah Generasi</label>
+                <input type="number" class="form-control" name="generations" value="{{ form_data.generations }}" min="10" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">Crossover Rate</label>
+                <input type="number" class="form-control" name="crossover_rate" value="{{ form_data.crossover_rate }}" step="0.01" min="0" max="1" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">Mutation Rate</label>
+                <input type="number" class="form-control" name="mutation_rate" value="{{ form_data.mutation_rate }}" step="0.01" min="0" max="1" required>
+              </div>
+
+              <button type="submit" class="btn btn-success w-100 fw-bold">
+                Cari Rute Terbaik
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- KOLOM HASIL -->
+        <div class="col-md-8">
+          <h3 class="fw-light">Hasil Optimasi</h3>
+          
+          {% if final_result %}
+          <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-success text-white fw-bold">
+              Rute Terbaik Ditemukan
+            </div>
+            <div class="card-body">
+              <div class="text-center mb-3">
+                <h1 class="display-5 fw-bold text-dark">
+                  {{ "%.4f"|format(final_result.best_distance) }} 
+                </h1>
+                <span class="badge bg-warning text-dark">Total Jarak Tempuh</span>
+              </div>
+              
+              <h6 class="text-muted">Urutan Kota (Rute Terbaik):</h6>
+              <div class="alert alert-light border text-center fs-5">
+                {% for city in final_result.best_route_names %}
+                  {{ city }} <i class="bi bi-arrow-right mx-1 text-muted">&rarr;</i>
+                {% endfor %}
+                {{ final_result.best_route_names[0] }} 
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow-sm border-0">
+            <div class="card-header fw-bold">Log Kemajuan (Progress)</div>
+            <div class="card-body">
+              <div style="background-color: #f8f9fa; height: 200px; overflow-y: auto; padding: 10px; font-family: 'Courier New', monospace; border-radius: 5px;">
+                {% for log in logs %}
+                  <div>{{ log }}</div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          {% else %}
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center text-muted">
+               <h4>Siap Menghitung</h4>
+              <p>Masukkan parameter di kiri dan tekan tombol untuk memulai.</p>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
